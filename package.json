@@ -1,0 +1,30 @@
+{
+  "name": "dateonly",
+  "version": "0.1.0",
+  "description": "Date objects without time",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "biome lint --write ./src",
+    "fmt": "biome format --write ./src",
+    "fix": "biome check --write ./src",
+    "test": "bun test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lwileczek/dateonly.git"
+  },
+  "keywords": [
+    "date",
+    "dates",
+    "dateonly"
+  ],
+  "author": "lwileczek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lwileczek/dateonly/issues"
+  },
+  "homepage": "https://github.com/lwileczek/dateonly#readme",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.3"
+  }
+}
