@@ -14,15 +14,16 @@ coverage: test-coverage
 
 # Format code
 fmt:
-    bunx biome format --write ./src
+    bunx biome format --write ./lib
 
 # Lint project
 lint:
-    bunx biome lint --write ./src
+    bunx biome lint --write ./lib
 
 # Lint and format project
 fix:
-    bunx biome check --write ./src
+    bunx biome check --write ./lib
+    bunx biome check --write ./test
 
 # Generate a markdown file from JSDocs strings
 make-docs:

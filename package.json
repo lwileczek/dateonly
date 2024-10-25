@@ -1,14 +1,15 @@
 {
   "name": "@patient-otter/dateonly",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Date objects without time",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "biome lint --write ./src",
-    "fmt": "biome format --write ./src",
-    "fix": "biome check --write ./src",
+    "lint": "biome lint --write ./lib",
+    "fmt": "biome format --write ./lib",
+    "fix": "biome check --write ./lib",
     "test": "bun test"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lwileczek/dateonly.git"
