@@ -32,3 +32,6 @@ make-docs:
 #Publish library to NPM
 publish:
     npm publish --access public
+
+types: 
+    tsc -d --declarationDir ./lib --declarationMap --emitDeclarationOnly --allowJs ./lib/index.js
