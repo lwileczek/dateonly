@@ -1,8 +1,8 @@
 {
-  "name": "dateonly",
-  "version": "0.1.0",
+  "name": "@patient-otter/dateonly",
+  "version": "0.1.2",
   "description": "Date objects without time",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "lint": "biome lint --write ./src",
     "fmt": "biome format --write ./src",
@@ -25,6 +25,10 @@
   },
   "homepage": "https://github.com/lwileczek/dateonly#readme",
   "devDependencies": {
-    "@biomejs/biome": "1.9.3"
+    "@biomejs/biome": "1.9.3",
+    "jsdoc-to-markdown": "^9.0.4"
+  },
+  "directories": {
+    "test": "test"
   }
 }

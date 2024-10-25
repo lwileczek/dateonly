@@ -1,5 +1,5 @@
 import { expect, test, describe } from "bun:test";
-import { DateOnly } from '../src'
+import { DateOnly } from '../lib'
 
 const loops = 100;
 
