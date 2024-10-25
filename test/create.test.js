@@ -21,9 +21,17 @@ describe("Creating DateOnly Objects", () => {
 
 	test("Create with random [in bounds] inputs", () => {
 		for (let k = 0; k < loops; k++) {
-			const y = Math.ceil(Math.random() * 4000);
+			let y = Math.ceil(Math.random() * 4000);
+			if (Math.random() < 0.2) {
+				y *= -1;
+			}
+
+			let shouldBe = y;
+			if (0 <= y && y < 100) {
+				shouldBe += 1900;
+			}
 			const d = new DateOnly(y);
-			expect(d.getFullYear()).toBe(y);
+			expect(d.getFullYear()).toBe(shouldBe);
 			expect(d.getMonth()).toBe(1);
 			expect(d.getDate()).toBe(1);
 		}
@@ -36,7 +44,12 @@ describe("Creating DateOnly Objects", () => {
 			const d = Math.ceil(Math.random() * 28);
 			const date = new DateOnly(`${y}`, `${m}`, `${d}`);
 
-			expect(date.getFullYear()).toBe(y);
+			let shouldBe = y;
+			if (0 <= y && y < 100) {
+				shouldBe += 1900;
+			}
+
+			expect(date.getFullYear()).toBe(shouldBe);
 			expect(date.getMonth()).toBe(m);
 			expect(date.getDate()).toBe(d);
 		}
