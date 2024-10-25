@@ -1,20 +1,22 @@
 // The builtin Date object does not fail or throw errors on construction so we
 // need to do our best to do the same. No errors, let users put in crazy crap
 
+const dayAbbreviation = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const monthAbbreviation = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 //TODO:
 // toJSON
 // toString
-// fromString
 // fromDate
 // month and date roll overs
 // Handle invalid inputs like objects, arrays, and booleans
 
 /** A date object with without time */
 class DateOnly {
-	#date;
-	#month;
-	#year;
-	#invalid;
+	#date = 1;
+	#month = 1;
+	#year = 1970;
+	#invalid = false;
 
 	/**
 	 * Create a new DateOnly object
@@ -23,10 +25,62 @@ class DateOnly {
 	 * @param{number} [date] The year the of the date
 	 */
 	constructor(year = 1970, month = 1, date = 1) {
-		this.#invalid = false;
 		this.#year = +year;
-		this.#month = +month;
+		this.setMonth(+month);
 		this.#date = +date;
+	}
+
+	/**
+	 * Crete a DateOnly Object from a number, numbers represent the days since
+	 * 1 Jan 1970
+	 * @param {number} n The number to be converted to a DateOnly Object
+	 */
+	static fromNumber(n) {
+		const d = new Date(Date.UTC(1970, 1, 1, 0, 0, 0));
+		d.setUTCDate(d.getUTCDate() + n);
+		return new DateOnly(d.getFullYear(), d.getUTCMonth() + 1, d.getUTCDate());
+	}
+
+	/**
+	 * Create a DateOnly Object from some string. Wraps new Date(str)
+	 * @param {string} s The string to read the date info from
+	 */
+	static fromString(s) {
+		if (!DateOnly.#isDate(s)) {
+			return DateOnly.#createInvalidDate();
+		}
+
+		const d = new Date(s);
+		return new DateOnly(d.getFullYear(), d.getUTCMonth() + 1, d.getUTCDate());
+	}
+
+	/**
+	 * Create a DateOnly Object from some string. Wraps new Date(str)
+	 * @param {Date} d The date to use in creating a new DateOnly object
+	 * using the date's UTC values
+	 */
+	static fromDate(d) {
+		if (!DateOnly.#isDate(d)) {
+			return DateOnly.#createInvalidDate();
+		}
+
+		return new DateOnly(d.getFullYear(), d.getUTCMonth() + 1, d.getUTCDate());
+	}
+
+	/**
+	 * Check if a string returns a valid date object
+	 */
+	static #isDate(val) {
+		return !Number.isNaN(new Date(val).getTime());
+	}
+
+	/**
+	 * Check if a string returns a valid date object
+	 */
+	static #createInvalidDate() {
+		const dt = new DateOnly();
+		dt.#invalid = true;
+		return dt;
 	}
 
 	/**
@@ -64,25 +118,42 @@ class DateOnly {
 	}
 
 	/**
+	 * Get day of the week
+	 */
+	getDay() {
+		const d = new Date(Date.UTC(this.#year, this.#month - 1, this.#date, 0, 0, 0));
+		return d.getUTCDay();
+	}
+
+	/**
 	 * Return the month value from the DateOnly.
 	 * Indexed from 1, 12 is december
 	 * @param {number} v The new desired value for the value
 	 */
 	setMonth(v) {
 		if (v < 1) {
-			for (let start = v; start < 1; start += 12) {
-				this.#year -= 1;
+			const end = v * -1;
+			for (let m = 0; m <= end; m++) {
+				if (this.getMonth() <= 1) {
+					this.#month = 12;
+					this.#year -= 1;
+					continue;
+				}
+				this.#month--;
 			}
-			const m = 11 - (Math.abs(v) % 12) + 1;
-			this.#month = m;
 			return;
 		}
 
 		if (12 < v) {
-			for (let mth = v; 12 < mth; mth -= 12) {
-				this.#year += 1;
+			this.#year++;
+			for (let mth = 0; mth < v - 12; mth++) {
+				if (this.#month >= 12) {
+					this.#year++;
+					this.#month = 1;
+					continue;
+				}
+				this.#month++;
 			}
-			this.#month = (v % 12) + 1;
 			return;
 		}
 
@@ -116,11 +187,35 @@ class DateOnly {
 	 * @returns{string} the date represented as an ISO8601 string
 	 */
 	toISOString() {
+		if (this.#invalid) {
+			return "Invalid DateOnly";
+		}
 		return `${this.#year}${sep}${this.#month}${sep}${this.#date}T:00:00:00.000Z`;
 	}
 
+	/**
+	 * JSON serializes the date to an ISO8601 date
+	 * @returns{string} the date represented as an ISO8601 string
+	 */
+	toJSON() {
+		return this.toISOString();
+	}
+
+	/**
+	 * Returns a Date stirng
+	 */
 	toDateString() {
-		return "Thu Oct 17 2024";
+		if (this.#invalid) {
+			return "Invalid DateOnly";
+		}
+		return `${dayAbbreviation[this.getDay()]} ${monthAbbreviation[this.getMonth() - 1]} ${this.getDate()} ${this.getFullYear()}`;
+	}
+
+	/**
+	 * Returns if the current date time object is valid or not
+	 */
+	isValid() {
+		return !this.#invalid;
 	}
 }
 

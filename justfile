@@ -6,6 +6,11 @@ default:
 test:
     bun test
 
+test-coverage:
+    bun test --coverage
+
+coverage: test-coverage
+
 # Format code
 fmt:
     bunx biome format --write ./src

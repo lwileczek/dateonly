@@ -53,6 +53,22 @@ describe("Creating DateOnly Objects", () => {
             expect(date.getMonth()).toBeGreaterThan(0);
         }
     });
+
+    const validStrings = [
+        { input: '2025-04-08', year: 2025, month: 4, date: 8 },
+        { input: '04-08-2025', year: 2025, month: 4, date: 8 },
+        { input: '05/14/2028', year: 2028, month: 5, date: 14 },
+    ];
+
+    for (const tc of validStrings) {
+        test(`Create from string: ${tc.input}`, () => {
+            const dt = DateOnly.fromString(tc.input)
+            expect(dt.isValid()).toBe(true)
+            expect(dt.getFullYear()).toBe(tc.year)
+            expect(dt.getMonth()).toBe(tc.month)
+            expect(dt.getDate()).toBe(tc.date)
+        });
+    }
 });
 
 describe('Changing values after create', () => {
@@ -79,4 +95,23 @@ describe('Changing values after create', () => {
             expect(date.getMonth()).toBeGreaterThan(0);
         }
     });
+})
+
+describe('Creating invalid DateOnly Objects', () => {
+    const invalidStringInputs = [
+        '2023-02-32',
+        'This is a random string',
+        //'Leywdeeffeeg 221', // This is a valid date from JS
+        //'Foostreet 1', // This is a valid date from JS
+        '2024-40-12',
+        '14/05/2028'
+    ];
+
+    for (const tc of invalidStringInputs) {
+        test(`Invalid String: ${tc}`, () => {
+            const d = DateOnly.fromString(tc)
+            expect(d.toDateString()).toBe('Invalid DateOnly')
+        });
+    }
+
 })
