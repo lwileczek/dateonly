@@ -2,6 +2,8 @@
 A drop in replacement for Date objects in JavaScript without a time component.
 This avoids any hassel having to do with timezones.
 
+Approximately 2kb after being built and minified.
+
 ## Why?
 If you find yourself only caring about dates, like a birthday, holiday, or vacation day
 but the dates keep getting changed around because of timezones, this library avoids
