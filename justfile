@@ -30,8 +30,11 @@ make-docs:
     bunx jsdoc2md lib/index.js > docs.md
 
 #Publish library to NPM
-publish:
+publish: types
     npm publish --access public
+
+build:
+    bun build ./lib/index.js --minify --outdir dist
 
 types: 
     tsc -d --declarationDir ./lib --declarationMap --emitDeclarationOnly --allowJs ./lib/index.js

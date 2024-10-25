@@ -27,7 +27,8 @@
   "homepage": "https://github.com/lwileczek/dateonly#readme",
   "devDependencies": {
     "@biomejs/biome": "1.9.3",
-    "jsdoc-to-markdown": "^9.0.4"
+    "jsdoc-to-markdown": "^9.0.4",
+    "typescript": "^5.6.3"
   },
   "directories": {
     "test": "test"
