@@ -62,9 +62,16 @@ console.log(dateFromString.toString()) //'2030-06-25'
 
 ## Create a new DateOnly object
 **Kind**: global class  
-**Param{number}**: [year=1970] The year the of the date  
-**Param{number}**: [month=1] The year the of the date  
-**Param{number}**: [date=1] The year the of the date  
+<a name="new_Create a new DateOnly object_new"></a>
+
+### new Create a new DateOnly object([year], [date], [month])
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [year] | <code>number</code> | <code>1970</code> | The year the of the date |
+| [date] | <code>number</code> | <code>1</code> | The year the of the date |
+| [month] | <code>number</code> | <code>1</code> | The year the of the date |
+
 <a name="DateOnly"></a>
 
 ## DateOnly
@@ -90,6 +97,7 @@ A date object with without time
         * [.fromNumber(n)](#DateOnly.fromNumber)
         * [.fromString(s)](#DateOnly.fromString)
         * [.fromDate(d)](#DateOnly.fromDate)
+        * [.now()](#DateOnly.now)
 
 <a name="DateOnly+getFullYear"></a>
 
@@ -227,3 +235,10 @@ Create a DateOnly Object from some string. Wraps new Date(str)
 | --- | --- | --- |
 | d | <code>Date</code> | The date to use in creating a new DateOnly object using the date's UTC values |
 
+<a name="DateOnly.now"></a>
+
+### DateOnly.now()
+Create a new DateOnly object for the current date
+
+**Kind**: static method of [<code>DateOnly</code>](#DateOnly)  
+**Returns{dateonly}**: A donly only object with the current local date  

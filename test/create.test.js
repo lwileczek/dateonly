@@ -11,6 +11,14 @@ describe("Creating DateOnly Objects", () => {
         expect(d.getDate()).toBe(1);
     });
 
+    test("Create a new DateOnly with the current date", () => {
+        const d = new Date();
+        const today = DateOnly.now();
+        expect(today.getFullYear()).toBe(d.getFullYear());
+        expect(today.getMonth()).toBe(d.getMonth() + 1);
+        expect(today.getDate()).toBe(d.getDate());
+    });
+
     test("Create with random [in bounds] inputs", () => {
         for (let k = 0; k < loops; k++) {
             const y = Math.ceil(Math.random() * 4000)
